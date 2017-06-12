@@ -106,7 +106,7 @@
 %% redefine cleardoublepage to empty pages
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
     \thispagestyle{empty}%
-\hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\hbox{}\null\if@twocolumn\hbox{}\null\fi\fi\fi} %IMP
 %% underline
 \renewcommand{\CJKunderlinecolor}{\color[rgb]{0,0,0}}
 \def\UCAS@underline[#1]#2{%
@@ -136,7 +136,7 @@
 %%%%**************************** Make Chinese Titlepage ******************************
 %%
 \renewcommand\maketitle{%
-  \cleardoublepage
+  \clearpage
   \thispagestyle{empty}
   \begin{center}
     \zihao{4}\bfseries\songti
@@ -177,7 +177,7 @@
         Draft Version (\today)
       \end{footnotesize}
     \fi
-    \cleardoublepage
+    \clearpage
   \else
     \ifUCAS@versioninfo
       \thispagestyle{empty}
@@ -186,7 +186,7 @@
         \noindent
         Draft Version (\today)
       \end{footnotesize}
-      \cleardoublepage
+      \clearpage
     \fi
   \fi
 }
@@ -206,7 +206,7 @@
 %%%%*********************** Make English Titlepage ***********************************
 %%
 \newcommand\makeenglishtitle{%
-  \cleardoublepage
+  \clearpage
   \thispagestyle{empty}
   \begin{center}
     \zihao{3}\bfseries
@@ -226,7 +226,7 @@
   \clearpage
   \if@twoside
     \thispagestyle{empty}
-    \cleardoublepage
+    \clearpage
   \fi
 }
 %%%%% --------------------------------------------------------------------------------
@@ -234,32 +234,50 @@
 %%%%*********************** Make Author Declaration ***********************************
 %%
 \newcommand\makedeclaration{%
-  \cleardoublepage
+  \clearpage
   \thispagestyle{empty}
 
   \begin{center}
-      {\zihao{3}\heiti \UCAS@value@declare@create}
+      \begin{spacing}{2.0}
+          {\zihao{3}\heiti \UCAS@value@declare@right}
+      \end{spacing}
   \end{center}
 
-  \UCAS@value@declare@creativity\\
+  \begin{spacing}{2.0}
+      {\zihao{-3}\UCAS@value@declare@rightsfirst}
 
-  \hfill{} {\UCAS@value@declare@s \UCASunderline[70pt]{ } \ \ \UCAS@value@declare@d \UCASunderline[70pt]{ }}\\
+      {\zihao{-3}\UCAS@value@declare@rightssecond}
 
-  \vskip 150pt
+      {\zihao{-3} \UCAS@value@declare@rule}
+  \end{spacing}
+
+  \vskip 4 cm
+  \leftline{\zihao{-3} \UCAS@value@declare@s \UCASunderline[59pt]{ } \quad \UCAS@value@declare@t \UCASunderline[59pt]{ }
+  \quad \UCAS@value@declare@d \UCASunderline[60pt]{ }}
+
+  \if@twoside
+  \clearpage
+  \thispagestyle{empty}
+  \fi
 
   \begin{center}
-      {\zihao{3}\heiti \UCAS@value@declare@right}
+      \begin{spacing}{2.0}
+          {\zihao{3}\heiti \UCAS@value@declare@create}
+      \end{spacing}
   \end{center}
 
-  \UCAS@value@declare@rights
+  \begin{spacing}{2.0}
+      {\zihao{-3} \UCAS@value@declare@creativityfirst}
 
-  {\heiti \UCAS@value@declare@rule}\\
+      {\zihao{-3} \UCAS@value@declare@creativitysecond}
+  \end{spacing}
 
-  \hfill{} {\UCAS@value@declare@s \UCASunderline[70pt]{ } \ \ \UCAS@value@declare@t \UCASunderline[70pt]{ } \ \ \UCAS@value@declare@d \UCASunderline[70pt]{ }}
+  \vskip 10 cm
+  {\zihao{-3} {\UCAS@value@declare@s \UCASunderline[110pt]{ } \quad \UCAS@value@declare@d \UCASunderline[100pt]{ }}}
   \clearpage
   \if@twoside
     \thispagestyle{empty}
-    \cleardoublepage
+    \clearpage
   \fi
 }
 %%%%% --------------------------------------------------------------------------------
@@ -267,27 +285,32 @@
 %%%%****************************** New Environments **********************************
 %%
 %% define chinese abstract
-\newenvironment{abstract}
-{\chapter[\UCAS@label@abstract]{
-     {\zihao{3}\heiti \UCAS@value@title}
-     \vskip 25pt
-     {\zihao{-3}\heiti \UCAS@label@abstract}
-  }}
-  {}
+\newenvironment{abstract}{
+    \chapter[\UCAS@label@abstract]{
+        {\zihao{-3}\heiti \UCAS@label@abstract}
+        \thispagestyle{IMPmatterstyle}
+    }
+}{}
 %% define chinese keywords
 \newcommand\keywords[1]{%
-    \vspace{2ex}\noindent{\zihao{4}\heiti \UCAS@label@keywords} #1}
+    \vspace{2ex}\noindent{\zihao{4}\heiti \UCAS@label@keywords} #1
+}
 %% define engish abstract
 \newenvironment{englishabstract}
 {\chapter[\UCAS@label@englishabstract]{
-     {\zihao{3}\bfseries \UCAS@value@englishtitle}
+     {\zihao{3}\bfseries \UCAS@label@englishabstract}
      \vskip 25pt
-     {\zihao{-3}\bfseries \UCAS@label@englishabstract}
+     {\zihao{-3}\bfseries \UCAS@value@englishtitle \\}
+     {\zihao{-4} \UCAS@value@englishauthor \quad (\UCAS@value@englishmajor)\\}
+     {\zihao{-4} Directed by Professor \UCAS@value@englishadvisor \\} 
+     \thispagestyle{IMPmatterstyle}
   }}
   {}
 %% define engish keywords
 \newcommand\englishkeywords[1]{%
-  \vspace{2ex}\noindent{\zihao{4}\bfseries \UCAS@label@englishkeywords} #1}
+  \vspace{2ex}\noindent{\zihao{4}\bfseries \UCAS@label@englishkeywords} #1
+  \thispagestyle{IMPmatterstyle} 
+  }
 %%%%% --------------------------------------------------------------------------------
 %%
 %%%%**************************** Dotted Line in TOC **********************************

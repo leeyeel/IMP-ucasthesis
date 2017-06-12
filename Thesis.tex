@@ -13,6 +13,7 @@
 %%%%************************ Document Class Declaration ******************************
 %%
 \documentclass[doublesided]{Style/ucasthesis}% thesis template of UCAS
+\usepackage{setspace}
 %% Multiple optional arguments:
 %% [scheme = plain] % for thesis writing of international students
 %% [<singlesided|doublesided|printcopy>] % single-sided, double-sided, or print layout
@@ -61,14 +62,15 @@
 %%
 \intotoc{\contentsname}% add a corresponding item to the contents table and bookmark
 \tableofcontents% contents catalog
-\intotoc{\listfigurename}% add a corresponding item to the contents table and bookmark
-\listoffigures% figures catalog
-\intotoc{\listtablename}% add a corresponding item to the contents table and bookmark
-\listoftables% tables catalog
+\thispagestyle{IMPmatterstyle}
+%\intotoc{\listfigurename}% add a corresponding item to the contents table and bookmark
+%\listoffigures% figures catalog
+%\intotoc{\listtablename}% add a corresponding item to the contents table and bookmark
+%\listoftables% tables catalog
 %%
 %% >>> prematter
 %%
-\input{Tex/Prematter}% list of symbols, preface of books
+%\input{Tex/Prematter}% list of symbols, preface of books
 %%
 %%%%% --------------------------------------------------------------------------------
 %%
@@ -85,9 +87,9 @@
 %%%%******************************** Appendix ****************************************
 %%
 %% Some subordinate chapters.
-\cleardoublepage
-\appendix%
-\input{Tex/Appendix}%
+%\cleardoublepage
+%\appendix%
+%\input{Tex/Appendix}%
 %%%%% --------------------------------------------------------------------------------
 %%
 %%%%******************************* Backmatter ***************************************
@@ -103,6 +105,7 @@
 %%% >>> Other contents
 %%
 \input{Tex/Backmatter}
+\thispagestyle{authormatterstyle}
 %%
 \end{document}
 %%%%% --------------------------------------------------------------------------------

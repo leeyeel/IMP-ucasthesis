@@ -320,6 +320,14 @@ macros package]
     %% deactivate uppercase effect
     \renewcommand{\MakeUppercase}[1]{#1}
 %% define different kinds of header and footer for different parts
+
+\fancypagestyle{IMPmatterstyle}{% style for IMPmatter
+    \fancyhf{}% clear fields
+    \fancyhead[C]{\small \leftmark}% structure elements
+    \renewcommand{\headrulewidth}{1pt}% header rule
+    \renewcommand{\footrulewidth}{0pt}% footer rule
+}
+
 \fancypagestyle{frontmatterstyle}{% style for frontmatter
     \fancyhf{}% clear fields
     \fancyhead[RE]{\small \@title}% structure elements
@@ -347,6 +355,16 @@ macros package]
     \renewcommand{\headrulewidth}{1pt}% header rule
     \renewcommand{\footrulewidth}{0pt}% footer rule
 }
+\fancypagestyle{authormatterstyle}{% header and footer style for backmatter
+    \fancyhf{}% clear fields
+    \fancyhead[RE]{\small \leftmark}% structure elements
+    \fancyhead[LO]{\small \leftmark}% structure elements
+    \fancyhead[LE]{\small \thepage}% page number
+    \fancyhead[RO]{\small \thepage}% page number
+    \renewcommand{\headrulewidth}{1pt}% header rule
+    \renewcommand{\footrulewidth}{0pt}% footer rule
+}
+
 %% redefine \frontmatter to include the change
 \providecommand{\frontmatter}{}% compatibility for non book classes
 \let\myfrontmatter\frontmatter%
@@ -354,6 +372,16 @@ macros package]
     \myfrontmatter%
     \pagestyle{frontmatterstyle}%
 }
+
+%% redefine \header to include the change
+\providecommand{\IMPmatter}{}% compatibility for non book classes
+\let\myIMPmatter\IMPmatter%
+\renewcommand{\IMPmatter}{%
+    \myIMPmatter%
+    \pagestyle{IMPmatterstyle}%
+}
+
+
 %% redefine \mainmatter to include the change
 \providecommand{\mainmatter}{}% compatibility for non book classes
 \let\mymainmatter\mainmatter%
