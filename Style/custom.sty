@@ -64,31 +64,57 @@ macros package]
 \providecommand{\Trace}{\operatorname{tr}}% trace operator
 \providecommand{\Diag}{\operatorname{diag}}% diagonal
 \providecommand{\Def}{\operatorname{def}}% define
-\providecommand{\Max}{\operatorname{max}}% maximum
-\providecommand{\Min}{\operatorname{min}}% minimum
 \providecommand{\Loptr}{\operatorname{\mathcal{L}}}% spatial operator
 \providecommand{\Toptr}{\operatorname{\mathcal{LL}}}% temporal operator
 \providecommand{\Soptr}{\operatorname{\mathcal{S}}}% solution operator
+\providecommand{\Des}[1]{\mathrm{#1}}% Superscripts and subscripts are in roman type if they are descriptive
 %%
 %%% >>> Graphic Length Factor
 %%
-\newcommand*{\MyFactor}{0.8}% for single figure
-\newcommand*{\MySubFactor}{0.48}% for subfigure
+\providecommand*{\MyFactor}{0.6}% for single figure
+\providecommand*{\MySubFactor}{0.45}% for subfigure
 %%
 %%% >>> Nomenclature item
 %%
-\newcommand{\nomenclatureitem}[3][ ]{%
+\providecommand{\nomenclatureitem}[3][ ]{%
     \noindent\makebox[0.15\textwidth][l]{#2}{{#3}\hfill{#1}}\par
 }
 %%
 %%% >>> Add content link to the table of content and bookmark
 %%
 %% define a macro for adding chapter/section title to toc and bookmark.
-\newcommand{\intotoc}[2][chapter]{%
+\providecommand{\intotoc}[2][chapter]{%
     \cleardoublepage% ensure correct page reference
     \markboth{\MakeUppercase{#2}}{}% set the leftmark
     \phantomsection% use for adobe bookmark.
     \addcontentsline{toc}{#1}{#2}% add content #2 to toc as #1
+}
+%%
+%%% >>> Text embedded citation
+%%
+%% \citetns for \citet
+\providecommand*{\citetns}[2][]{%
+    \begingroup%
+        \let\NAT@mbox=\mbox%
+        \let\@cite\NAT@citenum%
+        \let\NAT@space\NAT@spacechar%
+        \let\NAT@super@kern\relax%
+        \renewcommand\NAT@open{[}%
+        \renewcommand\NAT@close{]}%
+        \citet[#1]{#2}%
+    \endgroup%
+}
+%% \citepns for \citep
+\providecommand*{\citepns}[2][]{%
+    \begingroup%
+        \let\NAT@mbox=\mbox%
+        \let\@cite\NAT@citenum%
+        \let\NAT@space\NAT@spacechar%
+        \let\NAT@super@kern\relax%
+        \renewcommand\NAT@open{[}%
+        \renewcommand\NAT@close{]}%
+        \citep[#1]{#2}%
+    \endgroup%
 }
 %%%%% --------------------------------------------------------------------------------
 %%
@@ -99,15 +125,19 @@ macros package]
 %%
 %% Set line space in whole document by \linespread:
 %\linespread{1.3}% 1.3 for "one and a half" line spacing, and 1.6 for "double" line spacing
-%% skip distance for paragraphs
+%% Skip distance for paragraphs
 %\setlength{\parskip}{0.5ex plus 0.25ex minus 0.25ex}% vertical space before a paragraph.
+%% Set distance between bibliographic entries
+\setlength{\bibsep}{0.0pt plus 0.3ex}
+%% Set font size for bibliography
+\renewcommand*{\bibfont}{\small}
 %%
 %%% >>> Toc Style
 %%
-\setcounter{tocdepth}{1}% specifies what depth to take the Table of Contents to.
+\setcounter{tocdepth}{1}% the depth for the Table of Contents.
 \setcounter{secnumdepth}{3}% the depth for section numbering occurs, default is 2(subsub).
 %%
-%%% >>> Grouping Figure/Equation Numbering by Section, Numberwithin.
+%%% >>> Figure/Equation Numbering
 %%
 %% For long documents the numbering can become cumbersome as the numbers
 %% reach into double and triple digits. To reset the counters at the

@@ -44,9 +44,9 @@
 %%%%*************************** Loadclass Infomation *********************************
 %%
 \ifUCAS@doublesided% if double-sided printing enabled
-  \LoadClass[UTF8,a4paper,twoside,fntef,12pt]{ctexbook}
+  \LoadClass[UTF8,a4paper,twoside,12pt]{ctexbook}
 \else% if double-sided printing isn't enabled
-  \LoadClass[UTF8,a4paper,oneside,fntef,12pt]{ctexbook}
+  \LoadClass[UTF8,a4paper,oneside,12pt]{ctexbook}
 \fi
 %%%%% --------------------------------------------------------------------------------
 %%
@@ -95,7 +95,7 @@
 %% specifies the amount of space between paragraphs.
 \setlength{\parskip}{0.5ex plus 0.25ex minus 0.25ex}
 %% line spacing
-\renewcommand{\baselinestretch}{1.4} % line space setting
+\renewcommand{\baselinestretch}{1.3} % line space setting
 \raggedbottom % prevent adding vertical white space in strange places
 %% default pagestyle is page number at bottom without headers and footers
 \pagestyle{plain}
@@ -103,7 +103,7 @@
 %%
 %%%%********************* Some Style Control Commands ********************************
 %%
-%% redefine cleardoublepage to empty pages
+%% redefine clearpage to empty pages
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
     \thispagestyle{empty}%
 \hbox{}\null\if@twocolumn\hbox{}\null\fi\fi\fi} %IMP
@@ -198,7 +198,9 @@
 \newcommand\englishauthor[1]{\def\UCAS@value@englishauthor{#1}}
 \newcommand\englishadvisor[1]{\def\UCAS@value@englishadvisor{#1}}
 \newcommand\englishdegree[1]{\def\UCAS@value@englishdegree{#1}}
+\newcommand\englishthesistype[1]{\def\UCAS@value@englishthesistype{#1}}
 \newcommand\englishmajor[1]{\def\UCAS@value@englishmajor{#1}}
+\newcommand\englishmajortype[1]{\def\UCAS@value@englishmajortype{#1}}
 \newcommand\englishinstitute[1]{\def\UCAS@value@englishinstitute{#1}}
 \newcommand\englishdate[1]{\def\UCAS@value@englishdate{#1}}
 %%%%% --------------------------------------------------------------------------------
@@ -212,13 +214,17 @@
     \zihao{3}\bfseries
     \vspace*{20pt}
     {\UCASunderline{\ \UCAS@value@englishtitle\ }}
-    \vskip \stretch{1}
-    By \\
-    \UCAS@value@englishauthor
-    \vskip \stretch{2}
-    \zihao{4}\bfseries
+    \vskip 40pt
     \UCAS@label@englishstatement
     \vskip 30pt
+    By \\
+    \vskip 20pt
+    \UCAS@value@englishauthor
+    \vskip 20pt
+    \zihao{4}\bfseries
+    \vskip 10pt
+    \zihao{3}Supervisor: \UCAS@value@englishadvisor \\
+    \vskip \stretch{1}
     \UCAS@value@englishinstitute
     \vskip 20pt
     \UCAS@value@englishdate
@@ -238,79 +244,51 @@
   \thispagestyle{empty}
 
   \begin{center}
-      \begin{spacing}{2.0}
-          {\zihao{3}\heiti \UCAS@value@declare@right}
-      \end{spacing}
+      {\zihao{3}\heiti \UCAS@value@declare@create}
   \end{center}
 
-  \begin{spacing}{2.0}
-      {\zihao{-3}\UCAS@value@declare@rightsfirst}
+  \UCAS@value@declare@creativity\\
 
-      {\zihao{-3}\UCAS@value@declare@rightssecond}
+  {\hspace*{30ex} \UCAS@value@declare@s  \\ 
+  \hspace*{34ex} \UCAS@value@declare@d }\\
 
-      {\zihao{-3} \UCAS@value@declare@rule}
-  \end{spacing}
-
-  \vskip 4 cm
-  \leftline{\zihao{-3} \UCAS@value@declare@s \UCASunderline[59pt]{ } \quad \UCAS@value@declare@t \UCASunderline[59pt]{ }
-  \quad \UCAS@value@declare@d \UCASunderline[60pt]{ }}
-
-  \if@twoside
-  \clearpage
-  \thispagestyle{empty}
-  \fi
+  \vskip 40pt
 
   \begin{center}
-      \begin{spacing}{2.0}
-          {\zihao{3}\heiti \UCAS@value@declare@create}
-      \end{spacing}
+      {\zihao{3}\heiti \UCAS@value@declare@right}
   \end{center}
 
-  \begin{spacing}{2.0}
-      {\zihao{-3} \UCAS@value@declare@creativityfirst}
+  \UCAS@value@declare@rights
+  \vskip 15pt
 
-      {\zihao{-3} \UCAS@value@declare@creativitysecond}
-  \end{spacing}
-
-  \vskip 10 cm
-  {\zihao{-3} {\UCAS@value@declare@s \UCASunderline[110pt]{ } \quad \UCAS@value@declare@d \UCASunderline[100pt]{ }}}
+  {\hspace*{10ex} \UCAS@value@declare@s \hspace*{20ex} 导师签名:\\ 
+  \hspace*{14ex} \UCAS@value@declare@d  \hspace*{20ex} \UCAS@value@declare@d }\\
   \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \clearpage
-  \fi
 }
 %%%%% --------------------------------------------------------------------------------
 %%
 %%%%****************************** New Environments **********************************
 %%
 %% define chinese abstract
-\newenvironment{abstract}{
-    \chapter[\UCAS@label@abstract]{
-        {\zihao{-3}\heiti \UCAS@label@abstract}
-        \thispagestyle{IMPmatterstyle}
-    }
-}{}
+\newenvironment{abstract}
+{\chapter[\UCAS@label@abstract]{
+     \vskip 25pt
+     {\zihao{-3}\heiti \UCAS@label@abstract}
+  }}
+  {}
 %% define chinese keywords
 \newcommand\keywords[1]{%
-    \vspace{2ex}\noindent{\zihao{4}\heiti \UCAS@label@keywords} #1
-}
+    \vspace{2ex}\noindent{\zihao{4}\heiti \UCAS@label@keywords} #1}
 %% define engish abstract
 \newenvironment{englishabstract}
 {\chapter[\UCAS@label@englishabstract]{
-     {\zihao{3}\bfseries \UCAS@label@englishabstract}
      \vskip 25pt
-     {\zihao{-3}\bfseries \UCAS@value@englishtitle \\}
-     {\zihao{-4} \UCAS@value@englishauthor \quad (\UCAS@value@englishmajor)\\}
-     {\zihao{-4} Directed by Professor \UCAS@value@englishadvisor \\} 
-     \thispagestyle{IMPmatterstyle}
+     {\zihao{-3}\bfseries \UCAS@label@englishabstract}
   }}
   {}
 %% define engish keywords
 \newcommand\englishkeywords[1]{%
-  \vspace{2ex}\noindent{\zihao{4}\bfseries \UCAS@label@englishkeywords} #1
-  \thispagestyle{IMPmatterstyle} 
-  }
+  \vspace{2ex}\noindent{\zihao{4}\bfseries \UCAS@label@englishkeywords} #1}
 %%%%% --------------------------------------------------------------------------------
 %%
 %%%%**************************** Dotted Line in TOC **********************************
