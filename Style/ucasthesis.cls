@@ -106,7 +106,8 @@
 %% redefine clearpage to empty pages
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
     \thispagestyle{empty}%
-\hbox{}\null\if@twocolumn\hbox{}\null\fi\fi\fi} %IMP
+\hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+%\hbox{}\null\if@twocolumn\hbox{}\null\fi\fi\fi} %IMP
 %% underline
 \renewcommand{\CJKunderlinecolor}{\color[rgb]{0,0,0}}
 \def\UCAS@underline[#1]#2{%
